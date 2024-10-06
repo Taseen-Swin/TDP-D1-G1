@@ -17,7 +17,7 @@ class ExpressServer {
         this.app.use(cors());
         // Serve static files like HTML, CSS, and JS from 'public' folder
 
-        this.app.use(express.static('../public'));
+        // this.app.use(express.static('../public'));
     }
 
 
@@ -25,9 +25,10 @@ class ExpressServer {
     async setup() {
 
         // Use the HTML route to serve static pages
-        new HtmlRoute(this.app);
+        // 
 
         new Route(this.app);
+        new HtmlRoute(this.app);
 
         // await DbService.init(
         //     this.config.DB,
