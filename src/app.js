@@ -32,11 +32,9 @@ class ExpressServer {
 
         // await DbService.init(
         //     this.config.DB,
-        //     this.config.SUBSCRIPTION_SERVICE_URL,
         //     this.config.EMAIL_USER,
         //     this.config.EMAIL_PASS,
         //     this.config.EMAIL_HOST,
-        //     this.config.ENV
         // );
 
         // Start the server

@@ -38,6 +38,81 @@ class Database {
         }
 
     }
+        // Method for admin/user login
+        async login(username, password) {
+            try {
+                const request = this.databasePool.request();
+                const result = await request
+                    .input('username', sql.VarChar, username)
+                    .input('password', sql.VarChar, password)
+                    .query('SELECT * FROM Users WHERE username = @username AND password = @password');
+    
+                return result.recordset; // Return user data
+            } catch (error) {
+                console.error('Login error:', error);
+                throw new Error('Login failed');
+            }
+        }
+    
+        // Get user details
+        async getUserDetails(userId) {
+            try {
+                const request = this.databasePool.request();
+                const result = await request
+                    .input('userId', sql.Int, userId)
+                    .query('SELECT * FROM Users WHERE id = @userId');
+    
+                return result.recordset[0]; // Return single user data
+            } catch (error) {
+                console.error('Get user details error:', error);
+                throw new Error('Failed to get user details');
+            }
+        }
+    
+        // Get reports list
+        async getReportsList() {
+            try {
+                const request = this.databasePool.request();
+                const result = await request.query('SELECT * FROM Reports');
+    
+                return result.recordset; // Return reports list
+            } catch (error) {
+                console.error('Get reports list error:', error);
+                throw new Error('Failed to get reports list');
+            }
+        }
+    
+        // Get single report by reportId
+        async getSingleReport(reportId) {
+            try {
+                const request = this.databasePool.request();
+                const result = await request
+                    .input('reportId', sql.Int, reportId)
+                    .query('SELECT * FROM Reports WHERE id = @reportId');
+    
+                return result.recordset[0]; // Return single report data
+            } catch (error) {
+                console.error('Get single report error:', error);
+                throw new Error('Failed to get single report');
+            }
+        }
+    
+        // Get notifications list
+        async getNotificationList() {
+            try {
+                const request = this.databasePool.request();
+                const result = await request.query('SELECT * FROM Notifications');
+    
+                return result.recordset; // Return notifications list
+            } catch (error) {
+                console.error('Get notifications list error:', error);
+                throw new Error('Failed to get notifications list');
+            }
+        }
+    
+    
+
+
 }
 
 module.exports = { Database };
