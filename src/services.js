@@ -2,21 +2,21 @@
 
 const sql = require('mssql'); // Import the mssql package
 
-class Database {
+class DatabaseService {
     constructor() {
         this.databasePool = null;
         this.subscriptionService = null;
         this.sqlConfig = {};
     }
 
-    async init(configVars) {
+    async init() {
 
         // Configure SQL connection
         this.sqlConfig = {
-            user: configVars.USER,
-            password: configVars.PASS,
-            database: configVars.NAME,
-            server: configVars.HOST,
+            user: 'sa',
+            password: 'Password123',
+            database: 'MalwareAnalysis',
+            server: 'localhost',
             pool: {
                 max: 50,
                 min: 0,
@@ -45,7 +45,7 @@ class Database {
                 const result = await request
                     .input('username', sql.VarChar, username)
                     .input('password', sql.VarChar, password)
-                    .query('SELECT * FROM Users WHERE username = @username AND password = @password');
+                    .query('SELECT id,username,user_type FROM users WHERE username = @username AND password = @password');
     
                 return result.recordset; // Return user data
             } catch (error) {
@@ -60,7 +60,7 @@ class Database {
                 const request = this.databasePool.request();
                 const result = await request
                     .input('userId', sql.Int, userId)
-                    .query('SELECT * FROM Users WHERE id = @userId');
+                    .query('SELECT * FROM users WHERE id = @userId');
     
                 return result.recordset[0]; // Return single user data
             } catch (error) {
@@ -73,7 +73,7 @@ class Database {
         async getReportsList() {
             try {
                 const request = this.databasePool.request();
-                const result = await request.query('SELECT * FROM Reports');
+                const result = await request.query('SELECT id,malware_type,malware_name,datetime FROM prediction_report ORDER BY id DESC;');
     
                 return result.recordset; // Return reports list
             } catch (error) {
@@ -88,7 +88,7 @@ class Database {
                 const request = this.databasePool.request();
                 const result = await request
                     .input('reportId', sql.Int, reportId)
-                    .query('SELECT * FROM Reports WHERE id = @reportId');
+                    .query('SELECT * FROM prediction_report WHERE id = @reportId');
     
                 return result.recordset[0]; // Return single report data
             } catch (error) {
@@ -101,7 +101,7 @@ class Database {
         async getNotificationList() {
             try {
                 const request = this.databasePool.request();
-                const result = await request.query('SELECT * FROM Notifications');
+                const result = await request.query('SELECT * FROM notifications');
     
                 return result.recordset; // Return notifications list
             } catch (error) {
@@ -109,10 +109,62 @@ class Database {
                 throw new Error('Failed to get notifications list');
             }
         }
+        async insertNotification(malwareType, malwareName, timestamp) {
+            try {
+                const request = this.databasePool.request();
+                
+                // Prepare the insert query
+                const query = `
+                    INSERT INTO notification (malware_type, malware_name, datetime)
+                    VALUES (@malwareType, @malwareName, @timestamp);
+                `;
+                
+                // Add parameters to the request
+                request.input('malwareType', sql.VarChar, malwareType);
+                request.input('malwareName', sql.VarChar, malwareName);
+                request.input('timestamp', sql.DateTime, timestamp);
+                
+                // Execute the query
+                await request.query(query);
+                
+                console.log('Notification inserted successfully');
+            } catch (error) {
+                console.error('Insert notification error:', error);
+                throw new Error('Failed to insert notification');
+            }
+        }
+        
+        async insertPredictionReport(malwareType, malwareName, timestamp, description, flowId) {
+            try {
+                const request = this.databasePool.request();
+                
+                // Prepare the insert query
+                const query = `
+                    INSERT INTO prediction_report (malware_type, malware_name, datetime, description, flow_id)
+                    VALUES (@malwareType, @malwareName, @timestamp, @description, @flowId);
+                `;
+                
+                // Add parameters to the request
+                request.input('malwareType', sql.VarChar, malwareType);
+                request.input('malwareName', sql.VarChar, malwareName);
+                request.input('timestamp', sql.DateTime, timestamp);
+                request.input('description', sql.VarChar, description);
+                request.input('flowId', sql.Int, flowId);
+                
+                // Execute the query
+                await request.query(query);
+                
+                console.log('Prediction report inserted successfully');
+            } catch (error) {
+                console.error('Insert prediction report error:', error);
+                throw new Error('Failed to insert prediction report');
+            }
+        }
+        
     
     
 
 
 }
 
-module.exports = { Database };
+module.exports = { DatabaseService };

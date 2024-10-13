@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background: #343a40;
+            color: white;
+            padding: 15px;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background: #495057;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile img {
+            border-radius: 50%;
+        }
+        .notifications {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            <img src="https://via.placeholder.com/100" alt="Profile Picture">
+            <h4>David Jackson</h4>
+        </div>
+        <a href="#">Dashboard</a>
+        <a href="#">Notifications</a>
+        <a href="#">Inbox</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+    </div>
+    <div class="content">
+        <div class="notifications">
+            <h5>Notifications</h5>
+            <p id="notification"><i class="fas fa-exclamation-circle"></i> Loading...</p>
+        </div>
+        <div>
+            <h5>Attack Prediction Reports</h5>
+            <button class="btn btn-primary">View All</button>
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Fetch notifications
+            $.ajax({
+                url: 'http://localhost:8000/notifications',
+                method: 'GET',
+                success: function(data) {
+                    console.log(data)
+                    $('#notification').text(data.title);
+                },
+                error: function(error) {
+                    console.log(error)
+                    $('#notification').text('Failed to load notifications');
+                }
+            });
+
+            // Fetch chart data
+            $.ajax({
+                url: 'http://localhost:8000/futurePredictionGraph',
+                method: 'GET',
+                success: function(data) {
+                    var labels = data.map(function(item) { return item.id; });
+                    var values = data.map(function(item) { return item.userId; });
+
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Malware Attack Overtime',
+                                data: values,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.error('Failed to load chart data', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask API Prediction</title>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Gather data from the form
+            // const formData = new FormData(document.getElementById('predictionForm'));
+            data = [
+  {
+    "duration": 2015134,
+    "total_fpackets": 3,
+    "total_bpackets": 0,
+    "total_fpktl": 267,
+    "total_bpktl": 0,
+    "min_fpktl": 89,
+    "min_bpktl": -1,
+    "max_fpktl": 89,
+    "max_bpktl": -1,
+    "mean_fpktl": 89.0,
+    "mean_bpktl": 0.0,
+    "std_fpktl": 0.707106781,
+    "std_bpktl": 0.0,
+    "total_fiat": 2015134,
+    "total_biat": 0,
+    "min_fiat": 989631,
+    "min_biat": -1,
+    "max_fiat": 1025503,
+    "max_biat": -1,
+    "mean_fiat": 1007567.0,
+    "mean_biat": 0.0,
+    "std_fiat": 25365.33444,
+    "std_biat": 0.0,
+    "fpsh_cnt": 0,
+    "bpsh_cnt": 0,
+    "furg_cnt": 0,
+    "burg_cnt": 0,
+    "total_fhlen": 60,
+    "total_bhlen": 0,
+    "fPktsPerSecond": 1.488734744,
+    "bPktsPerSecond": 0.0,
+    "flowPktsPerSecond": 1.488734744,
+    "flowBytesPerSecond": 132.4973922,
+    "min_flowpktl": 89,
+    "max_flowpktl": 89,
+    "mean_flowpktl": 89.0,
+    "std_flowpktl": 0.707106781,
+    "min_flowiat": 989631,
+    "max_flowiat": 1025503,
+    "mean_flowiat": 1007567.0,
+    "std_flowiat": 25365.33444,
+    "flow_fin": 0,
+    "flow_syn": 0,
+    "flow_rst": 0,
+    "flow_psh": 0,
+    "flow_ack": 0,
+    "flow_urg": 0,
+    "flow_cwr": 0,
+    "flow_ece": 0,
+    "downUpRatio": 0.0,
+    "avgPacketSize": 89.0,
+    "fAvgSegmentSize": 89.0,
+    "fHeaderBytes": 60,
+    "fAvgBytesPerBulk": 0,
+    "fAvgPacketsPerBulk": 0,
+    "fAvgBulkRate": 0.0,
+    "bVarianceDataBytes": 0,
+    "bAvgSegmentSize": 0,
+    "bAvgBytesPerBulk": 0,
+    "bAvgPacketsPerBulk": 0,
+    "bAvgBulkRate": 0.0,
+    "sflow_fpacket": 3,
+    "sflow_fbytes": 267,
+    "sflow_bpacket": 0,
+    "sflow_bbytes": 0,
+    "min_active": 1025503,
+    "mean_active": 1025503.0,
+    "max_active": 1025503,
+    "std_active": 0.0,
+    "min_idle": 1025503,
+    "mean_idle": 1025503.0,
+    "max_idle": 1025503,
+    "std_idle": 0.0,
+    "FFNEPD": 4,
+    "Init_Win_bytes_forward": 0,
+    "Init_Win_bytes_backward": -1,
+    "RRT_samples_clnt": 0,
+    "Act_data_pkt_forward": 3,
+    "min_seg_size_forward": 0
+  },
+  {
+    "duration": 65308204,
+    "total_fpackets": 4,
+    "total_bpackets": 4,
+    "total_fpktl": 526,
+    "total_bpktl": 499,
+    "min_fpktl": 40,
+    "min_bpktl": 40,
+    "max_fpktl": 386,
+    "max_bpktl": 367,
+    "mean_fpktl": 131.5,
+    "mean_bpktl": 124.75,
+    "std_fpktl": 169.9274355,
+    "std_bpktl": 161.5980095,
+    "total_fiat": 313996,
+    "total_biat": 65163326,
+    "min_fiat": 3876,
+    "min_biat": 1294,
+    "max_fiat": 156000,
+    "max_biat": 65004552,
+    "mean_fiat": 104665.3333,
+    "mean_biat": 21700000.0,
+    "std_fiat": 87291.18446,
+    "std_biat": 37500000.0,
+    "fpsh_cnt": 1,
+    "bpsh_cnt": 1,
+    "furg_cnt": 0,
+    "burg_cnt": 0,
+    "total_fhlen": 80,
+    "total_bhlen": 80,
+    "fPktsPerSecond": 0.061248048,
+    "bPktsPerSecond": 0.061248048,
+    "flowPktsPerSecond": 0.122496096,
+    "flowBytesPerSecond": 15.69481225,
+    "min_flowpktl": 40,
+    "max_flowpktl": 386,
+    "mean_flowpktl": 128.125,
+    "std_flowpktl": 153.5577486,
+    "min_flowiat": 1294,
+    "max_flowiat": 64994208,
+    "mean_flowiat": 9329743.429,
+    "std_flowiat": 24500000.0,
+    "flow_fin": 1,
+    "flow_syn": 2,
+    "flow_rst": 0,
+    "flow_psh": 2,
+    "flow_ack": 7,
+    "flow_urg": 0,
+    "flow_cwr": 0,
+    "flow_ece": 0,
+    "downUpRatio": 0.948669202,
+    "avgPacketSize": 128.125,
+    "fAvgSegmentSize": 131.5,
+    "fHeaderBytes": 80,
+    "fAvgBytesPerBulk": 0,
+    "fAvgPacketsPerBulk": 0,
+    "fAvgBulkRate": 0.0,
+    "bVarianceDataBytes": 26113.91667,
+    "bAvgSegmentSize": 124,
+    "bAvgBytesPerBulk": 0,
+    "bAvgPacketsPerBulk": 0,
+    "bAvgBulkRate": 0.0,
+    "sflow_fpacket": 4,
+    "sflow_fbytes": 526,
+    "sflow_bpacket": 4,
+    "sflow_bbytes": 499,
+    "min_active": 65308204,
+    "mean_active": 65300000.0,
+    "max_active": 65308204,
+    "std_active": 0.0,
+    "min_idle": 64994208,
+    "mean_idle": 65000000.0,
+    "max_idle": 64994208,
+    "std_idle": 0.0,
+    "FFNEPD": 2,
+    "Init_Win_bytes_forward": 4194240,
+    "Init_Win_bytes_backward": 934400,
+    "RRT_samples_clnt": 3,
+    "Act_data_pkt_forward": 4,
+    "min_seg_size_forward": 20
+  },
+  {
+  "duration": 1153424,
+  "total_fpackets": 28,
+  "total_bpackets": 43,
+  "total_fpktl": 6219,
+  "total_bpktl": 27718,
+  "min_fpktl": 52,
+  "min_bpktl": 52,
+  "max_fpktl": 1390,
+  "max_bpktl": 1390,
+  "mean_fpktl": 222.1071429,
+  "mean_bpktl": 644.6046512,
+  "std_fpktl": 368.7156728,
+  "std_bpktl": 622.4721313,
+  "total_fiat": 1125123,
+  "total_biat": 1124189,
+  "min_fiat": 2,
+  "min_biat": 6,
+  "max_fiat": 444501,
+  "max_biat": 444168,
+  "mean_fiat": 41671.22222,
+  "mean_biat": 26766.40476,
+  "std_fiat": 89529.51071,
+  "std_biat": 72023.07682,
+  "fpsh_cnt": 11,
+  "bpsh_cnt": 26,
+  "furg_cnt": 0,
+  "burg_cnt": 0,
+  "total_fhlen": 560,
+  "total_bhlen": 860,
+  "fPktsPerSecond": 24.27554828,
+  "bPktsPerSecond": 37.28030629,
+  "flowPktsPerSecond": 61.55585457,
+  "flowBytesPerSecond": 29422.8315,
+  "min_flowpktl": 52,
+  "max_flowpktl": 1390,
+  "mean_flowpktl": 477.9859155,
+  "std_flowpktl": 572.8564765,
+  "min_flowiat": 2,
+  "max_flowiat": 416260,
+  "mean_flowiat": 16477.48571,
+  "std_flowiat": 52865.78836,
+  "flow_fin": 0,
+  "flow_syn": 2,
+  "flow_rst": 0,
+  "flow_psh": 37,
+  "flow_ack": 70,
+  "flow_urg": 0,
+  "flow_cwr": 0,
+  "flow_ece": 0,
+  "downUpRatio": 4.456986654,
+  "avgPacketSize": 477.9859155,
+  "fAvgSegmentSize": 222.1071429,
+  "fHeaderBytes": 560,
+  "fAvgBytesPerBulk": 369,
+  "fAvgPacketsPerBulk": 5,
+  "fAvgBulkRate": 22826,
+  "bVarianceDataBytes": 387471.5543,
+  "bAvgSegmentSize": 644,
+  "bAvgBytesPerBulk": 6689,
+  "bAvgPacketsPerBulk": 8,
+  "bAvgBulkRate": 136137,
+  "sflow_fpacket": 0,
+  "sflow_fbytes": 0,
+  "sflow_bpacket": 0,
+  "sflow_bbytes": 0,
+  "min_active": -1,
+  "mean_active": 0.0,
+  "max_active": -1,
+  "std_active": 0.0,
+  "min_idle": -1,
+  "mean_idle": 0.0,
+  "max_idle": -1,
+  "std_idle": 0.0,
+  "FFNEPD": 2,
+  "Init_Win_bytes_forward": 4194240,
+  "Init_Win_bytes_backward": 2722560,
+  "RRT_samples_clnt": 34,
+  "Act_data_pkt_forward": 28,
+  "min_seg_size_forward": 32,
+
+}
+
+]
+
+
+            // // Convert FormData to JSON
+            // formData.forEach((value, key) => {
+            //     jsonData[key] = value;
+            // });
+
+            try {
+                // Make the POST request to the API
+                const response = await fetch('http://localhost:12345/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                // Handle the response
+                const result = await response.json();
+                document.getElementById('result').innerText = 'Prediction: ' + result.prediction;
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Flask API Prediction</h1>
+    <form id="predictionForm" onsubmit="submitForm(event)">
+        <!-- Example input fields, replace with actual features required by your model -->
+        <!-- <label for="feature1">Feature 1:</label>
+        <input type="text" id="feature1" name="feature1" required>
+        <br>
+        <label for="feature2">Feature 2:</label>
+        <input type="text" id="feature2" name="feature2" required> -->
+        <br>
+        <button type="submit">Predict</button>
+    </form>
+    <h2 id="result"></h2>
+</body>
+</html>

@@ -1,19 +1,193 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Login Page</title>
+ 
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #f0f7ff;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            width: 60%;
+            height: 50%;
+            margin: auto;
+            margin-top: 10%;
+            border: 1px solid #d6eaff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px #d6eaff;
+            display: flex;
+            background-color: #fff;
+        }
+        .image-section {
+            width: 50%;
+            background: url('https://via.placeholder.com/300') no-repeat center center;
+            background-size: cover;
+            border-radius: 15px 0 0 15px;
+        }
+        .form-section {
+            width: 50%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-section input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #d6eaff;
+            border-radius: 5px;
+        }
+        .form-section button {
+            width: 95%;
+            padding: 10px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-section button:hover {
+            background-color: #138496;
+        }
+    </style>
 </head>
 <body>
-    <h1>About Us</h1>
-    <!-- <nav>
-        <a href="/">Home</a> |
-        <a href="/about">About</a> |
-        <a href="/contact">Contact</a>
-    </nav> -->
-    <p>This is the about page of the application.</p>
-    <script src="js/main.js"></script>
+    
+    <div class="login-container">
+        <div class="image-section">
+           
+        </div>
+        <div class="form-section">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button type="button" onclick="login()">Login</button>
+        </div>
+    </div>
+
+  
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if fields are not empty
+            if (username === "" || password === "") {
+                alert("Please fill in both fields");
+                return;
+            }
+
+            // Prepare the data to send
+            const data = {
+                username: username,
+                password: password
+            };
+
+            // Send POST request to localhost:8000/login
+            fetch('http://localhost:8000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    alert("Login failed: " + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+    
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Predictions</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <h1>Prediction Visualization</h1>
+    <canvas id="predictionChart" width="400" height="200"></canvas>
+
+    <script>
+        async function getPredictions() {
+            const response = await fetch('http://localhost:3000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "min_flowpktl": 0.0,
+                    "max_flowpktl": 1448.0,
+                    "max_idle": 0.0,
+                    "bVarianceDataBytes": 483382.64555052784,
+                    "Init_Win_bytes_forward": 65535,
+                    "avgPacketSize": 798.9019607843137,
+                    "max_fpktl": 415.0,
+                    "max_flowiat": 37034.0,
+                    "fPktsPerSecond": 175.19150836453576
+                }
+                ) // Example: [[1, 2, 3, 4]]
+            });
+
+            const data = await response.json();
+            return data.predictions;
+        }
+
+        function drawChart(predictions) {
+            const ctx = document.getElementById('predictionChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: predictions.map((_, index) => index + 1), // X-axis labels
+                    datasets: [{
+                        label: 'Predictions',
+                        data: predictions,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        getPredictions().then(predictions => {
+            drawChart(predictions);
+        });
+    </script>
+</body>
+
 </html>

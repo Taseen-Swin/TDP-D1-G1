@@ -15,6 +15,18 @@ class HtmlRoute {
             res.sendFile(path.resolve(__dirname, '../public/index.html'));
         });
 
+        app.get('/dashboard', (req, res) => {
+            res.sendFile(path.resolve(__dirname, '../public/dashboard.html'));
+        });
+        app.get('/analytics', (req, res) => {
+            res.sendFile(path.resolve(__dirname, '../public/analytics.html'));
+        });
+        app.get('/reports', (req, res) => {
+            res.sendFile(path.resolve(__dirname, '../public/reports.html'));
+        });
+
+
+
 
         // Catch-all route for undefined HTML pages
         app.get('*', (req, res) => {
